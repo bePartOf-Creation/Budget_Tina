@@ -16,19 +16,25 @@ class BudgetCategory:
                 f"Spend It Wisely..\n")
 
     def validate_funds(self, amount):
-        if self.balance > amount:
-            return True
-        return False
+        try:
+            if self.balance > amount:
+                return True
+            return False
+        except ValueError:
+            print("Invalid Input")
 
     def deposit_funds(self, funds, expense_description):
         """Simulating a deposit function."""
-        self.balance += funds
-        self.keep_expense.append(
-            {
-                "expense_description": expense_description,
-                "amount": funds
-            }
-        )
+        try:
+            self.balance += funds
+            self.keep_expense.append(
+                {
+                    "expense_description": expense_description,
+                    "amount": funds
+                }
+            )
+        except ValueError:
+            print("Invalid Amount")
 
     def withdrawal_fund(self, funds, expense_description):
         """Simulating a withdrawal function."""
@@ -72,3 +78,7 @@ class BudgetCategory:
             exp_amount = item["amount"]
             print(f"{expenses} : {exp_amount:,d}")
         print(f"Total Expenses : {self.total_expenses():,d} ")
+
+    def remainBalanceAfterExpense(self):
+        left_balance = budget_amount - self.total_expenses()
+        return f"Remaining Balance After {self.name} expense :{left_balance}"
